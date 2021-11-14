@@ -92,10 +92,9 @@ class Company(Scraper):
 
         try:
             # print()
-            employee_object = {}
-            employee_object['name'] = (employee_raw.text.split("\n") or [""])[0].strip()
-            employee_object['designation'] = (employee_raw.text.split("\n") or [""])[3].strip()
-            employee_object['linkedin_url'] = employee_raw.find_element_by_tag_name("a").get_attribute("href")
+            #employee_object['name'] = (employee_raw.text.split("\n") or [""])[0].strip()
+            #employee_object['designation'] = (employee_raw.text.split("\n") or [""])[3].strip()
+            employee_url = employee_raw.find_element_by_tag_name("a").get_attribute("href")
             # print(employee_raw.text, employee_object)
             # _person = Person(
             #     # linkedin_url = employee_raw.find_element_by_tag_name("a").get_attribute("href"),
@@ -108,7 +107,7 @@ class Company(Scraper):
             #     )
             # print(_person, employee_object)
             # return _person
-            return employee_object
+            return employee_url
         except Exception as e:
             # print(e)
             return None
@@ -136,6 +135,7 @@ class Company(Scraper):
         results_li = results_list.find_elements_by_tag_name("li")
         for res in results_li:
             total.append(self.__parse_employee__(res))
+
 
         def is_loaded(previous_results):
           loop = 0
@@ -205,7 +205,7 @@ class Company(Scraper):
             section_id = 3
        #section ID is no longer needed, we are using class name now.
         #grid = driver.find_elements_by_tag_name("section")[section_id]
-        grid = driver.find_element_by_class_name("artdeco-card.p4.mb3")
+        grid = driver.find_element_by_class_name("artdeco-card.p5.mb4")
         print(grid)
         descWrapper = grid.find_elements_by_tag_name("p")
         if len(descWrapper) > 0:
